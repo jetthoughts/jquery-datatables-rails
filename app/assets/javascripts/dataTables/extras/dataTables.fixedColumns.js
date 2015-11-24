@@ -491,25 +491,39 @@ $.extend( FixedColumns.prototype , {
 		/* Event handlers */
 		var mouseController;
 
+		var scrollWrapper = function(el, scrollPos) {
+			if ('transform' in document.body.style) {
+				scrollPos = -scrollPos;
+				if (el.children.length) {
+					el.children[0].style.transform = 'translateY(' + scrollPos + 'px)';
+				}
+			} else {
+				el.scrollTop = scrollPos;
+			}
+		};
+
 		// When the body is scrolled - scroll the left and right columns
 		$(this.dom.scroller)
 			.on( 'mouseover.DTFC touchstart.DTFC', function () {
 				mouseController = 'main';
 			} )
-			.on( 'scroll.DTFC', function (e) {
+			.on( 'scroll.DTFC', $.fn.DataTable.util.throttle(function (e) {
+				console.count('scroll.DTFC');
 				if ( ! mouseController && e.originalEvent ) {
 					mouseController = 'main';
 				}
 
 				if ( mouseController === 'main' ) {
 					if ( that.s.iLeftColumns > 0 ) {
-						that.dom.grid.left.liner.scrollTop = that.dom.scroller.scrollTop;
+						scrollWrapper(that.dom.grid.left.liner, that.dom.scroller.scrollTop);
+						//that.dom.grid.left.liner.scrollTop = that.dom.scroller.scrollTop;
 					}
 					if ( that.s.iRightColumns > 0 ) {
-						that.dom.grid.right.liner.scrollTop = that.dom.scroller.scrollTop;
+						scrollWrapper(that.dom.grid.right.liner, that.dom.scroller.scrollTop);
+						//that.dom.grid.right.liner.scrollTop = that.dom.scroller.scrollTop;
 					}
 				}
-			} );
+			}, 200));
 
 		var wheelType = 'onwheel' in document.createElement('div') ?
 			'wheel.DTFC' :

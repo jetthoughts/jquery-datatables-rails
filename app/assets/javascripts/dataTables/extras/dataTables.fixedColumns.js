@@ -1286,7 +1286,7 @@ $.extend( FixedColumns.prototype , {
 		}
 
 		var that = this,
-			i, iLen, iHeight, iHeight2, iHeightOriginal, iHeightClone,
+			i, iLen, iHeight, iHeight2, iHeightOriginal, iHeightClone, iClientRectOriginal, iClientRectClone,
 			rootOriginal = original.getElementsByTagName(nodeName)[0],
 			rootClone    = clone.getElementsByTagName(nodeName)[0],
 			jqBoxHack    = $('>'+nodeName+'>tr:eq(0)', original).children(':first'),
@@ -1297,8 +1297,10 @@ $.extend( FixedColumns.prototype , {
 
 		for ( i=0, iLen=anClone.length ; i<iLen ; i++ )
 		{
-			iHeightOriginal = anOriginal[i].offsetHeight;
-			iHeightClone = anClone[i].offsetHeight;
+			iClientRectOriginal = anOriginal[i].getBoundingClientRect();
+			iClientRectClone = anClone[i].getBoundingClientRect();
+			iHeightOriginal = iClientRectOriginal.bottom - iClientRectOriginal.top;
+			iHeightClone = iClientRectClone.bottom - iClientRectClone.top;
 			iHeight = iHeightClone > iHeightOriginal ? iHeightClone : iHeightOriginal;
 
 			if ( this.s.sHeightMatch == 'semiauto' )

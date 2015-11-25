@@ -1,25 +1,26 @@
-
-
-/* Block out what is behind the fixed column's header and footer */
-table.DTFC_Cloned thead,
-table.DTFC_Cloned tfoot {
-	background-color: white;
+.DTFC_Cloned tr.even {
+    background-color: white;
+    margin-bottom: 0;
 }
 
-/* Block out the gap above the scrollbar on the right, when there is a fixed
- * right column
- */
-div.DTFC_Blocker {
-	background-color: white;
+.DTFC_LeftHeadWrapper table,
+.DTFC_RightHeadWrapper table {
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+    background-color: white;
 }
 
-div.DTFC_LeftWrapper table.dataTable,
-div.DTFC_RightWrapper table.dataTable {
-	margin-bottom: 0;
-	z-index: 2;
+.DTFC_LeftBodyWrapper table,
+.DTFC_RightBodyWrapper table {
+    border-top: none;
+    margin: 0 !important;
 }
 
-div.DTFC_LeftWrapper table.dataTable.no-footer,
-div.DTFC_RightWrapper table.dataTable.no-footer {
-	border-bottom: none;
+
+.DTFC_LeftFootWrapper table,
+.DTFC_RightFootWrapper table {
+    border-top: none;
+    margin-top: 0 !important;
+    background-color: white;
 }
+
